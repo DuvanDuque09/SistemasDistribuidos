@@ -17,6 +17,8 @@ class Agente extends Component
     public $ocupation = 'Desarrollador';
     public $type_person = 'Natural';
 
+    public $open = false;
+
     public function render()
     {
         return view('livewire.dashboard.agente')

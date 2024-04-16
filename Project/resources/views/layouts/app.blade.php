@@ -37,10 +37,10 @@
         <!-- Page Content -->
         {{--  <main>  --}}
         {{--  <div class="flex flex-col flex-1 w-full">  --}}
-        <div>
-            {{--  {{ $slot }}  --}}
-            @livewire('dashboard.agente')
-        </div>
+        {{--  <div>  --}}
+        {{--  {{ $slot }}  --}}
+        @livewire('dashboard.agente')
+        {{--  </div>  --}}
         {{--  </main>  --}}
         {{--  </div>  --}}
 

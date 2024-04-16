@@ -1,5 +1,5 @@
 {{--  <div class="h-screen">  --}}
-<div class="grid md:grid-cols-2 h-screen w-full overflow-y-auto">
+<div class="grid md:grid-cols-2 grid-cols-1 h-screen w-full overflow-y-auto">
     <div class="flex flex-col p-4 w-full h-full">
         <div class="grid grid-cols-2 w-full p-4 gap-4">
             <div class="bg-white w-full py-6 px-4 rounded-lg shadow">
@@ -45,7 +45,7 @@
             </div>
         </div>
         <div class="px-4 pb-4 w-full h-full">
-            <div class="bg-white w-full h-full py-6 px-4 rounded-lg shadow" x-data="{ tab: 'Productos' }">
+            <div class="bg-white w-full h-full py-6 px-4 rounded-lg shadow" x-data="{ tab: 'Consultas' }">
                 <div class="overflow-hidden rounded-xl border border-gray-100 bg-gray-50 p-1">
                     <ul class="flex items-center gap-2 text-sm font-medium">
                         <li class="flex-1">
@@ -124,7 +124,20 @@
                     </div>
                 </div>
                 <div class="flex flex-col h-full mt-6 gap-4" x-show="tab === 'Productos'">
-                    {{--  <div class="h-full border">  --}}
+                    <div class="flex justify-between items-center">
+                        <h6 class="pl-2 text-gray-700 text-2xl font-extrabold">Productos</h6>
+                        <button
+                            class="px-4 py-2 inline-flex items-center text-white bg-gradient-to-tl from-gray-400 to-slate-600 hover:from-gray-700 hover:to-slate-600 active:opacity-85 rounded-lg"
+                            wire:click="$set('open', true)">
+                            <svg viewBox="0 0 24 24" class="w-7 h-7" fill="CurrentColor"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M11 17C11 17.5523 11.4477 18 12 18C12.5523 18 13 17.5523 13 17V13H17C17.5523 13 18 12.5523 18 12C18 11.4477 17.5523 11 17 11H13V7C13 6.44771 12.5523 6 12 6C11.4477 6 11 6.44771 11 7V11H7C6.44772 11 6 11.4477 6 12C6 12.5523 6.44772 13 7 13H11V17Z">
+                                </path>
+                            </svg>
+                            <span class="uppercase text-xs font-bold">Agregar Producto</span>
+                        </button>
+                    </div>
                     <div class="flex flex-col rounded-lg bg-gray-50 text-gray-500" x-data="{ openD: false }">
                         <div class="flex cursor-pointer items-center justify-between py-2 px-5"
                             :class="{ 'bg-gray-50 rounded-lg': !openD, 'bg-gray-200 rounded-t-lg': openD }">
@@ -186,7 +199,8 @@
                                             src="{{ Storage::url('recursos/Debito.png') }}" alt="Debito" />
                                     </div>
                                     <div class="relative">
-                                        <h2 class="text-2xl font-extrabold text-gray-900 line-clamp-1">Cuenta Nómina
+                                        <h2 class="text-2xl font-extrabold text-gray-900 line-clamp-1">Cuenta
+                                            Nómina
                                         </h2>
                                         <div class="mt-4 flex flex-col">
                                             <span>455-000428-20</span>
@@ -617,8 +631,77 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex flex-col h-full mt-6" x-show="tab === 'Consultas'">
-                    Consultas
+                <div class="flex flex-col h-full mt-6 gap-4" x-show="tab === 'Consultas'">
+                    <div class="flex justify-between items-center">
+                        <h6 class="pl-2 text-gray-700 text-2xl font-extrabold">Consultas</h6>
+                        <button
+                            class="px-4 py-2 inline-flex items-center text-white bg-gradient-to-tl from-gray-400 to-slate-600 hover:from-gray-700 hover:to-slate-600 active:opacity-85 rounded-lg"
+                            wire:click="$set('open', true)">
+                            <svg viewBox="0 0 24 24" class="w-7 h-7" fill="CurrentColor"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M11 17C11 17.5523 11.4477 18 12 18C12.5523 18 13 17.5523 13 17V13H17C17.5523 13 18 12.5523 18 12C18 11.4477 17.5523 11 17 11H13V7C13 6.44771 12.5523 6 12 6C11.4477 6 11 6.44771 11 7V11H7C6.44772 11 6 11.4477 6 12C6 12.5523 6.44772 13 7 13H11V17Z">
+                                </path>
+                            </svg>
+                            <span class="uppercase text-xs font-bold">Nueva Consulta</span>
+                        </button>
+                    </div>
+                    <div class="flex flex-col rounded-lg bg-gray-50 w-full h-full p-4 sm:overflow-x-auto">
+                        <div class="h-full overflow-x-scroll xl:overflow-hidden">
+                            <table role="table" class="w-full">
+                                <thead>
+                                    <tr role="row">
+                                        <th class="border-b border-gray-200 pr-28 pb-[10px] text-start"
+                                            style="cursor: pointer;">
+                                            <p class="text-xs tracking-wide text-gray-600">NAME</p>
+                                        </th>
+                                        <th class="border-b border-gray-200 pr-28 pb-[10px] text-start"
+                                            style="cursor: pointer;">
+                                            <p class="text-xs tracking-wide text-gray-600">STATUS</p>
+                                        </th>
+                                        <th class="border-b border-gray-200 pr-28 pb-[10px] text-start"
+                                            style="cursor: pointer;">
+                                            <p class="text-xs tracking-wide text-gray-600">DATE</p>
+                                        </th>
+                                        <th class="border-b border-gray-200 pr-28 pb-[10px] text-start"
+                                            style="cursor: pointer;">
+                                            <p class="text-xs tracking-wide text-gray-600">PROGRESS</p>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody role="rowgroup">
+                                    <tr role="row">
+                                        <td class="pt-[14px] pb-[18px] sm:text-[14px]" role="cell">
+                                            <p class="text-sm font-bold text-gray-500">Marketplace</p>
+                                        </td>
+                                        <td class="pt-[14px] pb-[18px] sm:text-[14px]" role="cell">
+                                            <div class="flex items-center gap-2">
+                                                <div class="rounded-full text-xl"><svg stroke="currentColor"
+                                                        fill="currentColor" stroke-width="0" viewBox="0 0 24 24"
+                                                        class="text-green-500" height="1em" width="1em"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path fill="none" d="M0 0h24v24H0z"></path>
+                                                        <path
+                                                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z">
+                                                        </path>
+                                                    </svg></div>
+                                                <p class="text-sm font-bold text-gray-500">Approved</p>
+                                            </div>
+                                        </td>
+                                        <td class="pt-[14px] pb-[18px] sm:text-[14px]" role="cell">
+                                            <p class="text-sm font-bold text-gray-500">24.Jan.2021</p>
+                                        </td>
+                                        <td class="pt-[14px] pb-[18px] sm:text-[14px]" role="cell">
+                                            <div class="h-2 w-[68px] rounded-full bg-gray-200 dark:bg-navy-700">
+                                                <div class="flex h-full items-center justify-center rounded-full bg-brand-500 dark:bg-brand-400"
+                                                    style="width: 30%;"></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -626,9 +709,19 @@
 
         </div>
     </div>
-</div>
-{{--  <div class="bg-red-500">
+
+    <x-dialog-modal wire:model='open' maxWidth="2xl" class="relative">
+        <x-slot name="title">
+            Agregar Nuevo Producto
+        </x-slot>
+        <x-slot name="content">
+
+        </x-slot>
+        <x-slot name="footer">
+        </x-slot>
+    </x-dialog-modal>
+
+    {{--  <div class="bg-red-500">
         Hola
     </div>  --}}
 </div>
-{{--  </div>  --}}

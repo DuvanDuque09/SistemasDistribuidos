@@ -2,7 +2,7 @@
 
 Este proyecto va estar desarrollado con el framework [Laravel](https://laravel.com/) version 11.
 
-Este proyecto tiene como fin llevar el control de las gestion de clientes, que se comunican al servicio de atencion al cliente a sol.
+Este proyecto tiene como fin llevar el control de las gestion de clientes, que se comunican al servicio de atencion al cliente de Scotia Bank.
 
 ## Tabla de Contenido
 
@@ -50,11 +50,9 @@ Tecnologias usadas en el proyecto.
 
 ## Despliegue 📦
 
-_Agrega notas adicionales sobre como hacer deploy_
-
 ## Repositorio
 
-### [Repositorio](https://github.com/JuanZam21/ClientCenter_FrontEnd)
+### [Repositorio](https://github.com/DuvanDuque09/SistemasDistribuidos)
 
 En este repositorio encontrara el codigo fuente del proyecto.
 
@@ -64,7 +62,11 @@ En este repositorio encontrara el codigo fuente del proyecto.
 
 Aqui encontrara los sprints detallados para el desarrollo de la aplicacion.
 
-## Actas
+## Actas 📄
+
+### [Actas](https://drive.google.com/drive/folders/16LFqFR7dFBl6mKeS5JatKVd0oJLbeATC?usp=drive_link)
+
+Aqui encontrara las actas del avance de los resultados de cada sprint que se ha llevado a cabo.
 
 ## Autores ✒️<a name="id3"></a>
 
