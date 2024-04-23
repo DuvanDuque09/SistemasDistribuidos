@@ -25,6 +25,8 @@ class DatabaseSeeder extends Seeder
             // CitiesSeeder::class,
             RoleSeeder::class,
             UserSeeder::class,
+            // IdentificationTypeSeeder::class,
+            // CountrySeeder::class,
             // LicensesSeeder::class,
             // DocumentTypeSeeder::class,
             // DoingSeeder::class,

@@ -157,13 +157,34 @@
         </x-slot>
         <x-slot name="content">
             <dl class="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">
-                <div class="col-span-1 col-start-1 col-end-2 row-start-1 row-end-2">
+                <div class="col-span-1">
+                    <dt class="text-sm font-medium text-gray-500">Tipo de Identificación</dt>
+                    <select wire:model="type_identification"
+                        class="mt-1 w-full bg-gray-50 rounded-md border-none focus:border-red-500 focus:ring-red-500 shadow-sm">
+                        <option value="">Seleccione</option>
+                        {{--  @foreach ($variable as $key => $value)
+                            
+                        @endforeach  --}}
+                        {{--  <option value="Castigada">Aclaración de Saldos</option>
+                        <option value="Juridica">Reclamos por cobros</option>
+                        <option value="Vigente">Acuerdo de pago</option>  --}}
+                    </select>
+                    <x-input-error for="type_identification" />
+                </div>
+                {{--  <div class="col-span-1 col-start-1 col-end-2 row-start-1 row-end-2">  --}}
+                <div class="col-span-1">
+                    <dt class="text-sm font-medium text-gray-500">Identificación</dt>
+                    <x-input id="identification" class="block mt-1 w-full bg-gray-50 border-none" type="number"
+                        name="identification" />
+                    <x-input-error for="identification" />
+                </div>
+                <div class="col-span-1">
                     <dt class="text-sm font-medium text-gray-500">Nombre</dt>
                     <x-input id="name" class="block mt-1 w-full bg-gray-50 border-none" type="text"
                         name="name" />
                     <x-input-error for="name" />
                 </div>
-                <div
+                {{--  <div
                     class="md:col-span-1 md:col-start-2 md:col-end-3 md:row-start-1 md:row-end-3 row-start-3 row-end-4 flex flex-col">
                     <dt class="text-sm font-medium text-gray-500">Foto</dt>
                     <div class="mt-1 h-full flex items-center gap-4">
@@ -193,7 +214,7 @@
                         </div>
                     </div>
                     <x-input-error for="file" />
-                </div>
+                </div>  --}}
                 <div class="col-span-1">
                     <dt class="text-sm font-medium text-gray-500">Correo Electrónico</dt>
                     <x-input id="email" class="block mt-1 w-full bg-gray-50 border-none" type="email"

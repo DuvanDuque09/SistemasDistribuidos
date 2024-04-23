@@ -12,7 +12,7 @@ class IndexUser extends Component
 {
     use WithFileUploads;
 
-    public $open = false;
+    public $open = true;
     public $file;
     public $photo;
     public $state = 'Activo';

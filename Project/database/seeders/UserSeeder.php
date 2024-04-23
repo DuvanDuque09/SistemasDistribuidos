@@ -18,6 +18,8 @@ class UserSeeder extends Seeder
         $user->name = "Administrador";
         $user->email = "admin@scotia.com";
         $user->password = Hash::make('1234567890');
+        $user->person_id = 0;
+        $user->profile_photo_path = 'public/profile/Admin.png';
         $user->assignRole(1);
         $user->save();
     }
