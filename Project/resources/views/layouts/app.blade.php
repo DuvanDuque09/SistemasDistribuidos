@@ -17,36 +17,37 @@
 
     <!-- Styles -->
     @livewireStyles
+
+    <script>
+        const setup = () => {
+            return {
+                loading: true,
+            }
+        }
+    </script>
+
 </head>
 
-<body class="font-sans antialiased">
-    <x-banner />
+<body>
+    <div x-data="setup()" x-init="$refs.loading.classList.add('hidden');">
+        <div x-ref="loading"
+            class="fixed inset-0 z-[200] flex items-center justify-center text-white bg-black bg-opacity-50"
+            style="backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px)">
+            Cargando.....
+        </div>
 
-    <div class="flex h-screen bg-gray-50">
-        @livewire('menu.navigation')
+        <div class="flex h-screen bg-gray-50">
+            <!-- Sidebar -->
+            @livewire('menu.navigation')
 
-        <!-- Page Heading -->
-        {{--  @if (isset($header))
-            <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
-        @endif  --}}
+            <!-- Page Content -->
+            {{ $slot }}
+        </div>
+    </div>
 
-        <!-- Page Content -->
-        {{--  <main>  --}}
-        {{--  <div class="flex flex-col flex-1 w-full">  --}}
-        {{--  <div>  --}}
-        {{--  {{ $slot }}  --}}
-        @livewire('dashboard.agente')
-        {{--  </div>  --}}
-        {{--  </main>  --}}
-        {{--  </div>  --}}
+    @stack('modals')
 
-        @stack('modals')
-
-        @livewireScripts
+    @livewireScripts
 </body>
 
 </html>

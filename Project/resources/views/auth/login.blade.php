@@ -29,7 +29,7 @@
             <img src="{{ Storage::url('recursos/Manos.png') }}" alt="Manos" class="object-cover w-full h-full">
         </div>
 
-        <div class="lg:p-36 md:p-52 sm:20 p-8 w-full lg:w-2/3">
+        <div class="lg:p-36 md:p-52 sm:20 p-8 w-full h-full lg:w-2/3">
             <div class="mx-auto w-full max-w-sm lg:w-96 p-8">
                 <div class="flex flex-col items-center">
                     <img class="h-12" src="{{ Storage::url('recursos/ScotiaLogo.png') }}" alt="Lianvigila">
