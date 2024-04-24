@@ -18,6 +18,9 @@
     <!-- Styles -->
     @livewireStyles
 
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
         const setup = () => {
             return {
@@ -48,6 +51,82 @@
     @stack('modals')
 
     @livewireScripts
+
+    <script>
+        Livewire.on('load', function() {
+            location.reload();
+        })
+
+        Livewire.on('success', function(message) {
+            Swal.fire(
+                message,
+                'success'
+            )
+        })
+
+        Livewire.on('info', function(message) {
+            Swal.fire({
+                icon: 'info',
+                text: message,
+            })
+        })
+
+        Livewire.on('error', function(message) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: message,
+            })
+        })
+
+        window.addEventListener('user-delete-confirmation', event => {
+            Swal.fire({
+                title: 'Estas Seguro?',
+                text: event.detail.text,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#CA3A32',
+                cancelButtonColor: '#A9ABAE',
+                confirmButtonText: 'Si'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.dispatch('deleteConfirmed')
+                }
+            })
+        });
+
+        window.addEventListener('user-activate-confirmation', event => {
+            Swal.fire({
+                title: 'Estas Seguro?',
+                text: event.detail.text,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#CA3A32',
+                cancelButtonColor: '#A9ABAE',
+                confirmButtonText: 'Si'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.dispatch('activateConfirmed')
+                }
+            })
+        });
+
+        window.addEventListener('delete', event => {
+            Swal.fire(
+                'Actualizado!',
+                'Se ha Eliminado Correctamente.',
+                'success'
+            )
+        });
+
+        window.addEventListener('activate', event => {
+            Swal.fire(
+                'Activado!',
+                'Se ha Activado Correctamente.',
+                'success'
+            )
+        });
+    </script>
 </body>
 
 </html>

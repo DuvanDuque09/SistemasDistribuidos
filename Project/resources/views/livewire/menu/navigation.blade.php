@@ -75,26 +75,26 @@
 
         <div class="flex flex-col items-center flex-1 p-2 space-y-4">
             <!-- Search button -->
-            <div class="py-8">
-                <button
-                    class="group relative p-2 transition-colors rounded-lg shadow-md hover:bg-red-800 hover:text-white focus:outline-none focus:ring focus:ring-red-600 focus:ring-offset-white focus:ring-offset-2">
-                    <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M15.7955 15.8111L21 21M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        </path>
-                    </svg>
-                    <div class="absolute inset-y-0 left-12 hidden items-center group-hover:flex">
-                        <div
-                            class="relative whitespace-nowrap rounded-md bg-white px-4 py-2 text-sm font-semibold text-gray-900 drop-shadow-lg">
-                            <div class="absolute inset-0 -left-1 flex items-center">
-                                <div class="h-2 w-2 rotate-45 bg-white"></div>
-                            </div>
-                            <span>Buscar</span>
+            {{--  <div class="py-8 w-full">  --}}
+            <a href="{{ route('management.index') }}"
+                class="group relative p-2 my-8 transition-colors rounded-lg shadow-md hover:bg-red-800 hover:text-white focus:outline-none focus:ring focus:ring-red-600 focus:ring-offset-white focus:ring-offset-2 {{ Request::routeIs('management.index') ? 'bg-red-600 text-white' : 'text-red-600 hover:text-white hover:bg-red-600' }}">
+                <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M15.7955 15.8111L21 21M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    </path>
+                </svg>
+                <div class="absolute inset-y-0 left-12 hidden items-center group-hover:flex">
+                    <div
+                        class="relative whitespace-nowrap rounded-md bg-white px-4 py-2 text-sm font-semibold text-gray-900 drop-shadow-lg">
+                        <div class="absolute inset-0 -left-1 flex items-center">
+                            <div class="h-2 w-2 rotate-45 bg-white"></div>
                         </div>
+                        <span>Buscar</span>
                     </div>
-                </button>
-            </div>
+                </div>
+            </a>
+            {{--  </div>  --}}
             <!-- Home button -->
             @can('dashboard.admin')
                 <a href="{{ route('dashboard.admin') }}"
