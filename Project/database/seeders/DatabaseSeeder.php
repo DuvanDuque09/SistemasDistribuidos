@@ -21,17 +21,11 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
-            // DepartmentsSeeder::class,
-            // CitiesSeeder::class,
             RoleSeeder::class,
             UserSeeder::class,
-            // IdentificationTypeSeeder::class,
-            // CountrySeeder::class,
-            // LicensesSeeder::class,
-            // DocumentTypeSeeder::class,
-            // DoingSeeder::class,
-            // EffectSeeder::class,
-            // NotificationTypeSeeder::class
+            IdentificationTypeSeeder::class,
+            CountrySeeder::class,
+            TypesPersonsSeeder::class,
         ]);
     }
 }

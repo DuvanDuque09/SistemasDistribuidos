@@ -16,8 +16,8 @@ class IdentificationTypeSeeder extends Seeder
         DB::statement("INSERT INTO `identification_types` (`id`, `code`, `identification_type`) VALUES
             (1, 'CC','Cédula de Ciudadanía'),
             (2, 'CE','Cédula de Extranjería'),
-            (3, 'DNI','Documento Nacional de Identidad'),
-            (4, 'NIT','Número de Identificación Tributaria'),
+            (3, 'NI','Número de Identificación Tributaria'),
+            (4, 'PA','Pasaporte');
         ");
     }
 }

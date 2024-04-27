@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class CountrySeeder extends Seeder
+class TypesPersonsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,12 +14,9 @@ class CountrySeeder extends Seeder
     public function run(): void
     {
         DB::statement("
-            INSERT INTO `countries` (`id`, `code`, `country`) VALUES
-            (1, 'COL', 'Colombia'),
-            (2, 'CRI', 'Costa Rica'),
-            (3, 'PAN', 'Panamá'),
-            (4, 'PER', 'Perú'),
-            (5, 'CAN', 'Canadá');
+            INSERT INTO `types_people` (`id`, `type_person`) VALUES
+            (1, 'Natural'),
+            (2, 'Jurídica');
         ");
     }
 }
