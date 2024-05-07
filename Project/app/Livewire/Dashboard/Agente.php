@@ -21,6 +21,7 @@ class Agente extends Component
 
     public function render()
     {
+        // dd(session('companie'));
         return view('livewire.dashboard.agente')
             ->layout('layouts.app');
     }

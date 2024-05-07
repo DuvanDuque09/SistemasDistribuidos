@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class TypesPersonsSeeder extends Seeder
+class TypesManagements extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,9 +14,10 @@ class TypesPersonsSeeder extends Seeder
     public function run(): void
     {
         DB::statement("
-            INSERT INTO `types_persons` (`id`, `type_person`) VALUES
-            (1, 'Natural'),
-            (2, 'Jurídica');
+            INSERT INTO `types_managements` (`id`, `type_management`) VALUES
+            (1, 'Aclaración de Saldos'),
+            (2, 'Reclamos por Cobros'),
+            (3, 'Acuerdo de pago');
         ");
     }
 }

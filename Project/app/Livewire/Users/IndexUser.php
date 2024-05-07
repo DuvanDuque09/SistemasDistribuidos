@@ -6,8 +6,10 @@ use App\Models\Country;
 use App\Models\IdentificationType;
 use App\Models\Persons;
 use App\Models\User;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
@@ -18,9 +20,22 @@ class IndexUser extends Component
 
     public $openC = false;
     public $openE = false;
+    public $search;
     public $user_id;
+    public $remove = false;
     public $user = [];
     public $userE = [];
+
+    public function deletePhoto()
+    {
+        $this->userE['photo'] = null;
+        $this->remove = true;
+    }
+
+    public function updateduserEPhoto()
+    {
+        $this->remove = true;
+    }
 
     public function searchIdentification()
     {
@@ -57,8 +72,10 @@ class IndexUser extends Component
             ->first();
 
         if (!is_null($person)) {
-            $this->userE['identification'] = "";
-            $this->dispatch('info', 'Ya existe usuario registrado con ese número de identificación.');
+            if ($this->userE['person_id'] != $person->id) {
+                $this->userE['identification'] = "";
+                $this->dispatch('info', 'Ya existe usuario registrado con ese número de identificación.');
+            }
         }
     }
 
@@ -131,7 +148,7 @@ class IndexUser extends Component
             $user->save(); // Guardar usuario
 
             // Restablecer el formulario
-            // $this->reset('open', 'name', 'identification', 'email', 'address', 'phone', 'email', 'file');
+            $this->reset('openC');
             $this->user = [];
             $this->render();
             $this->dispatch('success', 'Usuario creado correctamente');
@@ -150,13 +167,13 @@ class IndexUser extends Component
             $this->validate(
                 [
                     'userE.identification_type' => 'required',
-                    'userE.identification' => 'required|numeric|digits_between:6,11|unique:App\Models\Persons,identification,' . $this->userE['id'],
+                    'userE.identification' => 'required|numeric|digits_between:6,11|unique:App\Models\Persons,identification,' . $this->userE['person_id'],
                     'userE.person' => 'required|min:3|max:255',
                     'userE.gender' => 'required',
                     'userE.address' => 'required|min:3|max:50',
                     'userE.country_id' => 'required',
                     'userE.phone' => 'required|numeric|digits_between:3,11',
-                    'userE.email' => 'required|email|unique:App\Models\User,email,' . $this->userE['id'],
+                    'userE.email' => 'required|email|unique:App\Models\User,email,' . $this->userE['user_id'],
                     'userE.ocupation' => 'required|min:3|max:50',
                     'userE.birthdate' => 'required',
                 ],
@@ -177,41 +194,44 @@ class IndexUser extends Component
                 ],
             );
 
-            // // Crear la persona
-            // $person = new Persons();
-            // $person->identification_type_id = $this->user['identification_type'];
-            // $person->identification = $this->user['identification'];
-            // $person->person = $this->user['person'];
-            // $person->gender = $this->user['gender'];
-            // $person->address = $this->user['address'];
-            // $person->country_id = $this->user['country_id'];
-            // $person->phone = $this->user['phone'];
-            // $person->email = $this->user['email'];
-            // $person->ocupation = $this->user['ocupation'];
-            // $person->birthdate = $this->user['birthdate'];
-            // $person->save(); // Guardar persona
+            // Editar la persona
+            $user = User::find($this->userE['user_id']);
+            $user->name = $this->userE['person'];
+            $user->email = $this->userE['email'];
 
-            // // Crear el usuario
-            // $user = new User();
-            // $user->name = $this->user['person'];
-            // $user->email = $this->user['email'];
-            // $user->password = Hash::make($this->user['identification']);
-            // $user->person_id = $person->id; // Relacionar con la persona
+            $person = Persons::find($user['person_id']);
+            $person->identification_type_id = $this->userE['identification_type'];
+            $person->identification = $this->userE['identification'];
+            $person->person = $this->userE['person'];
+            $person->gender = $this->userE['gender'];
+            $person->address = $this->userE['address'];
+            $person->country_id = $this->userE['country_id'];
+            $person->phone = $this->userE['phone'];
+            $person->email = $this->userE['email'];
+            $person->ocupation = $this->userE['ocupation'];
+            $person->birthdate = $this->userE['birthdate'];
+            $person->save(); // Editar persona
 
-            // DB::commit(); // Confirmar la transacción
+            DB::commit(); // Confirmar la transacción
 
-            // Manejar archivo de foto si existe
-            // if (isset($this->user['photo']) && !empty($this->user['photo'])) {
-            //     $photo = $this->user['photo']->store('/public/profile');
-            //     $user->profile_photo_path = $photo;
-            // }
+            if ($this->userE['photo'] !=  $user->profile_photo_path) {
+                if (!is_null($this->userE['photo'])) {
+                    if (!is_null($user->profile_photo_path)) {
+                        Storage::delete($user->profile_photo_path);
+                    }
+                    $photo = $this->userE['photo']->store('/public/profile');
+                    $user->profile_photo_path = $photo;
+                } else {
+                    Storage::delete($user->profile_photo_path);
+                    $user->profile_photo_path = null;
+                }
+            }
 
-            // $user->assignRole(2); // Asignar rol
-            // $user->save(); // Guardar usuario
+            $user->save(); // Editar usuario
 
             // Restablecer el formulario
-            // $this->reset('open', 'name', 'identification', 'email', 'address', 'phone', 'email', 'file');
-            $this->user = [];
+            $this->reset('openE', 'remove');
+            $this->userE = [];
             $this->render();
             $this->dispatch('success', 'Usuario editado correctamente');
         } catch (\Illuminate\Database\QueryException $e) { // Manejo de errores de base de datos
@@ -224,12 +244,13 @@ class IndexUser extends Component
     {
         $this->userE = [];
 
-        $user = User::select('users.*', 'p.*')
+        $user = User::select('users.id AS user_id', 'profile_photo_path', 'p.*')
             ->join('persons AS p', 'users.person_id', 'p.id')
             ->where('users.id', $id)
             ->first();
 
-        $this->userE['id'] = $user->id;
+        $this->userE['user_id'] = $user->user_id;
+        $this->userE['person_id'] = $user->id;
         $this->userE['identification_type'] = $user->identification_type_id;
         $this->userE['identification'] = $user->identification;
         $this->userE['person'] = $user->person;
@@ -290,6 +311,16 @@ class IndexUser extends Component
             ->join('model_has_roles AS m', 'users.id', 'm.model_id')
             ->join('roles AS r', 'm.role_id', 'r.id')
             ->where('r.id', '!=', 1)
+            ->where(function (Builder $query) {
+                if (!is_null($this->search)) {
+                    if ($this->search != "") {
+                        // return $query->orWhere('cu.identification', 'LIKE', '%' . $this->search . '%')
+                        return $query->orWhere('users.name', 'LIKE', '%' . $this->search . '%')
+                            ->orWhere('users.email', 'LIKE', '%' . $this->search . '%');
+                    }
+                }
+            })
+            // ->paginate(1);
             ->get();
 
         $identificationTypes = IdentificationType::all();

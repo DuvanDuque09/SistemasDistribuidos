@@ -25,7 +25,22 @@ class DashboardController extends Controller
                 break;
 
             case 'Agente':
+                // $group = Group::select('groups.id AS group_id', 'group.group', 'p.*')
+                //     ->join('groups_users AS gu', 'groups.id', 'p.id')
+                //     ->where('companies.user_id', Auth::user()->id)
+                //     ->where('companies.state', 'Activo')
+                //     ->first();
+                $companie['id'] = 100;
+
+
+                // if ($companie) {
+                session(['companie' => $companie]);
                 return redirect()->intended('dashboard/agente');
+                // } else {
+                //     Session::flush();
+                //     Auth::logout();
+                //     return view('pages.unauthorized');
+                // }
                 break;
         }
     }

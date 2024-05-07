@@ -35,131 +35,154 @@
             </div>
         </div>
 
-        <div class="flex mt-12">
-            <div class="flex-none w-full max-w-full">
-                <div
-                    class="md:relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl rounded-2xl bg-clip-border">
-                    <div class="flex-auto px-0 pt-0 pb-2">
-                        <div class="p-0 overflow-x-auto ps">
-                            <table class="items-center w-full mb-0 align-top border-gray-200 text-slate-500">
-                                <thead class="align-bottom">
-                                    <tr>
-                                        <th
-                                            class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                            Usuario</th>
-                                        <th
-                                            class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                            Rol</th>
-                                        <th
-                                            class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                            Estado</th>
-                                        <th
-                                            class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                            Fecha de Creación</th>
-                                        <th
-                                            class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                            Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($users as $u)
+        @if (count($users) > 0)
+            <div class="flex mt-12">
+                <div class="flex-none w-full max-w-full">
+                    <div
+                        class="md:relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl rounded-2xl bg-clip-border">
+                        <div class="px-6 pt-4 pb-8 bg-white rounded-t-lg border-b border-b-gray-200">
+                            <div>
+                                <dt class="text-sm font-medium text-gray-500">Buscar</dt>
+                                <div
+                                    class="relative mt-1 md:w-80 flex items-center  border-gray-300 focus-within:border-indigo-600 bg-gray-100 rounded-lg">
+                                    <svg class="pointer-events-none absolute ml-3 h-5 w-5 text-gray-400"
+                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                        aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                    <input type="text" wire:model.live="search"
+                                        class="border-0 bg-transparent w-full pl-10 pr-4 text-gray-800 placeholder-gray-400 focus:ring-0 sm:text-sm"
+                                        placeholder="Search..." role="combobox" aria-expanded="false"
+                                        aria-controls="options">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-auto px-0 pt-0 pb-2">
+                            <div class="p-0 overflow-x-auto ps">
+                                <table class="items-center w-full mb-0 align-top border-gray-200 text-slate-500">
+                                    <thead class="align-bottom">
                                         <tr>
-                                            <td
-                                                class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                                <div class="flex px-2 py-1">
-                                                    <div class="shrink-0">
-                                                        <img src="{{ $u->profile_photo_path ? Storage::url($u->profile_photo_path) : $u->profile_photo_url }}"
-                                                            class="inline-flex items-center justify-center mr-4 text-sm text-white h-9 w-9 rounded-xl">
+                                            <th
+                                                class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                                Usuario</th>
+                                            <th
+                                                class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                                Rol</th>
+                                            <th
+                                                class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                                Estado</th>
+                                            <th
+                                                class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                                Fecha de Creación</th>
+                                            <th
+                                                class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                                Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($users as $u)
+                                            <tr>
+                                                <td
+                                                    class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                                    <div class="flex px-2 py-1">
+                                                        <div class="shrink-0">
+                                                            <img src="{{ $u->profile_photo_path ? Storage::url($u->profile_photo_path) : $u->profile_photo_url }}"
+                                                                class="inline-flex items-center justify-center mr-4 text-sm text-white h-9 w-9 rounded-xl">
+                                                        </div>
+                                                        <div class="flex flex-col justify-center">
+                                                            <h6 class="mb-0 text-sm leading-normal">{{ $u->name }}
+                                                            </h6>
+                                                            <p class="mb-0 text-xs leading-tight text-slate-400">
+                                                                {{ $u->email }}</p>
+                                                        </div>
                                                     </div>
-                                                    <div class="flex flex-col justify-center">
-                                                        <h6 class="mb-0 text-sm leading-normal">{{ $u->name }}</h6>
-                                                        <p class="mb-0 text-xs leading-tight text-slate-400">
-                                                            {{ $u->email }}</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td
-                                                class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                                <p class="mb-0 text-xs font-semibold leading-tight">{{ $u->rol }}
-                                                </p>
-                                                <p class="mb-0 text-xs leading-tight text-slate-400">Scotiabank</p>
-                                            </td>
-                                            <td
-                                                class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                                <span
-                                                    class="bg-gradient-to-tl {{ $u->state === 'Activo' ? 'from-green-600 to-lime-400' : 'from-slate-600 to-slate-300' }}  px-2.5 text-xs rounded-md py-1.5 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white">{{ $u->state }}</span>
-                                            </td>
-                                            <td
-                                                class="p-2 text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                                <span
-                                                    class="text-xs font-semibold leading-tight text-slate-400">{{ $u->created_at }}</span>
-                                            </td>
-                                            <td
-                                                class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                                <div class="flex justify-center items-center gap-1">
-                                                    @if ($u->state == 'Activo')
-                                                        <a wire:click="showEdit({{ $u->id }})"
-                                                            class="cursor-pointer inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                class="h-5 w-5 text-slate-400" fill="none"
-                                                                viewBox="0 0 24 24" stroke="currentColor"
-                                                                stroke-width="2">
-                                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                                            </svg>
-                                                        </a>
-                                                    @endif
-                                                    <a wire:click="desactivate({{ $u->id }})"
-                                                        class="cursor-pointer inline-flex items-center px-3 py-2 border {{ $u->state == 'Activo' ? 'border-red-300 text-red-700 hover:bg-red-50 focus:ring-red-500' : 'border-green-300 text-green-700 hover:bg-green-50 focus:ring-green-500' }}  shadow-sm text-sm leading-4 font-medium rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-offset-2">
+                                                </td>
+                                                <td
+                                                    class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                                    <p class="mb-0 text-xs font-semibold leading-tight">
+                                                        {{ $u->rol }}
+                                                    </p>
+                                                    <p class="mb-0 text-xs leading-tight text-slate-400">Scotiabank</p>
+                                                </td>
+                                                <td
+                                                    class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                                    <span
+                                                        class="bg-gradient-to-tl {{ $u->state === 'Activo' ? 'from-green-600 to-lime-400' : 'from-slate-600 to-slate-300' }}  px-2.5 text-xs rounded-md py-1.5 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white">{{ $u->state }}</span>
+                                                </td>
+                                                <td
+                                                    class="p-2 text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                                    <span
+                                                        class="text-xs font-semibold leading-tight text-slate-400">{{ $u->created_at }}</span>
+                                                </td>
+                                                <td
+                                                    class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                                    <div class="flex justify-center items-center gap-1">
                                                         @if ($u->state == 'Activo')
-                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                class="h-5 w-5 text-red-400" fill="none"
-                                                                viewBox="0 0 24 24" stroke="currentColor"
-                                                                stroke-width="2">
-                                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                            </svg>
-                                                        @else
-                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                class="h-5 w-5 text-green-400" viewBox="0 0 19 17"
-                                                                version="1.1">
-                                                                <g id="Icons" stroke="none" stroke-width="1"
-                                                                    fill="none" fill-rule="evenodd">
-                                                                    <g id="Rounded"
-                                                                        transform="translate(-239.000000, -1486.000000)">
-                                                                        <g id="Content"
-                                                                            transform="translate(100.000000, 1428.000000)">
-                                                                            <g id="-Round-/-Content-/-how_to_reg"
-                                                                                transform="translate(136.000000, 54.000000)">
-                                                                                <g>
-                                                                                    <polygon id="Path"
-                                                                                        points="0 0 24 0 24 24 0 24" />
-                                                                                    <path
-                                                                                        d="M12,20 L3,20 L3,18 C3,15.34 8.33,14 11,14 C11.32,14 11.61,14.02 12,14.06 L11.16,14.88 C9.97,16.04 9.96,17.96 11.14,19.14 L12,20 Z M11,12 C8.79,12 7,10.21 7,8 C7,5.79 8.79,4 11,4 C13.21,4 15,5.79 15,8 C15,10.21 13.21,12 11,12 Z M16.18,19.78 C15.79,20.17 15.15,20.17 14.76,19.78 L12.69,17.69 C12.31,17.3 12.31,16.68 12.69,16.3 L12.7,16.29 C13.09,15.9 13.72,15.9 14.1,16.29 L15.47,17.66 L19.9,13.2 C20.29,12.81 20.92,12.81 21.31,13.2 L21.32,13.21 C21.7,13.6 21.7,14.22 21.32,14.6 L16.18,19.78 Z"
-                                                                                        id="🔹Icon-Color"
-                                                                                        fill="currentColor" />
+                                                            <a wire:click="showEdit({{ $u->id }})"
+                                                                class="cursor-pointer inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                    class="h-5 w-5 text-slate-400" fill="none"
+                                                                    viewBox="0 0 24 24" stroke="currentColor"
+                                                                    stroke-width="2">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                                                </svg>
+                                                            </a>
+                                                        @endif
+                                                        <a wire:click="desactivate({{ $u->id }})"
+                                                            class="cursor-pointer inline-flex items-center px-3 py-2 border {{ $u->state == 'Activo' ? 'border-red-300 text-red-700 hover:bg-red-50 focus:ring-red-500' : 'border-green-300 text-green-700 hover:bg-green-50 focus:ring-green-500' }}  shadow-sm text-sm leading-4 font-medium rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-offset-2">
+                                                            @if ($u->state == 'Activo')
+                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                    class="h-5 w-5 text-red-400" fill="none"
+                                                                    viewBox="0 0 24 24" stroke="currentColor"
+                                                                    stroke-width="2">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                                </svg>
+                                                            @else
+                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                    class="h-5 w-5 text-green-400" viewBox="0 0 19 17"
+                                                                    version="1.1">
+                                                                    <g id="Icons" stroke="none" stroke-width="1"
+                                                                        fill="none" fill-rule="evenodd">
+                                                                        <g id="Rounded"
+                                                                            transform="translate(-239.000000, -1486.000000)">
+                                                                            <g id="Content"
+                                                                                transform="translate(100.000000, 1428.000000)">
+                                                                                <g id="-Round-/-Content-/-how_to_reg"
+                                                                                    transform="translate(136.000000, 54.000000)">
+                                                                                    <g>
+                                                                                        <polygon id="Path"
+                                                                                            points="0 0 24 0 24 24 0 24" />
+                                                                                        <path
+                                                                                            d="M12,20 L3,20 L3,18 C3,15.34 8.33,14 11,14 C11.32,14 11.61,14.02 12,14.06 L11.16,14.88 C9.97,16.04 9.96,17.96 11.14,19.14 L12,20 Z M11,12 C8.79,12 7,10.21 7,8 C7,5.79 8.79,4 11,4 C13.21,4 15,5.79 15,8 C15,10.21 13.21,12 11,12 Z M16.18,19.78 C15.79,20.17 15.15,20.17 14.76,19.78 L12.69,17.69 C12.31,17.3 12.31,16.68 12.69,16.3 L12.7,16.29 C13.09,15.9 13.72,15.9 14.1,16.29 L15.47,17.66 L19.9,13.2 C20.29,12.81 20.92,12.81 21.31,13.2 L21.32,13.21 C21.7,13.6 21.7,14.22 21.32,14.6 L16.18,19.78 Z"
+                                                                                            id="🔹Icon-Color"
+                                                                                            fill="currentColor" />
+                                                                                    </g>
                                                                                 </g>
                                                                             </g>
                                                                         </g>
                                                                     </g>
-                                                                </g>
-                                                            </svg>
-                                                        @endif
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                            <div class="px-6 py-2">
-                                {{-- {{ $users->links() }} --}}
+                                                                </svg>
+                                                            @endif
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                                {{--  <div class="px-6 py-2">
+                                    {{ $users->links() }}
+                                </div>  --}}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        @endif
     </div>
 
     <x-dialog-modal wire:model='openC'>
@@ -248,7 +271,7 @@
                     <dt class="text-sm font-medium text-gray-500">Foto</dt>
                     <div class="mt-1 h-full flex items-center gap-4">
                         <span
-                            class="flex items-center h-full w-20 flex-shrink-0 rounded-full overflow-hidden bg-gray-100">
+                            class="flex items-center h-20 w-20 flex-shrink-0 rounded-full overflow-hidden bg-gray-100">
                             @if (isset($user['photo']) && !empty($user['photo']))
                                 <img class="object-cover h-full w-full" src="{{ $user['photo']->temporaryUrl() }}"
                                     alt="profile">
@@ -297,6 +320,12 @@
                 </div>
                 <div class="col-span-1">
                     <dt class="text-sm font-medium text-gray-500">Número de Identificación</dt>
+                    {{--  <x-input id="identification" class="block mt-1 w-full bg-gray-50 border-none"
+                    @if (isset($userE['identification_type']) && !empty($userE['identification_type'])) @if ($userE['identification_type'] != 4) type="number" @else type="text" @endif
+                    @endif
+                    wire:model="userE.identification" x-on:change="$wire.searchIdentificationE()"
+                    name="identification" />
+                    <x-input-error for="userE.identification" />  --}}
                     <x-input id="identification" class="block mt-1 w-full bg-gray-50 border-none" type="number"
                         wire:model="userE.identification" x-on:change="$wire.searchIdentificationE()"
                         name="identification" />
@@ -363,26 +392,28 @@
                 <div class="col-span-1 flex flex-col">
                     <dt class="text-sm font-medium text-gray-500">Foto</dt>
                     <div class="mt-1 h-full flex items-center gap-4">
-                        <span
-                            class="flex items-center h-full w-20 flex-shrink-0 rounded-full overflow-hidden bg-gray-100 relative">
-                            @if (isset($userE['photo']) && !empty($userE['photo']))
-                                <img class="object-cover h-full w-full" src="{{ Storage::url($userE['photo']) }}"
+                        @if (isset($userE['photo']) && !empty($userE['photo']))
+                            <div class="flex-shrink-0 h-20 w-20 relative group">
+                                <img class="object-cover h-full w-full rounded-full"
+                                    src="{{ $remove ? $userE['photo']->temporaryUrl() : Storage::url($userE['photo']) }}"
                                     alt="profile">
-                                <button wire:click="delete"
-                                    class="absolute justify-center items-center top-[-6px] right-[-6px] hover:bg-gray-300 bg-gray-200 rounded-full w-5 h-5">
+                                <button wire:click="deletePhoto"
+                                    class="absolute group-hover:block hidden z-50 justify-center items-center top-[-6px] right-[-6px] hover:bg-red-600 bg-red-400 text-white rounded-full w-5 h-5">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke-width="1.5" stroke="currentColor" class="h-5 w-5">
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                             d="M6 18 18 6M6 6l12 12" />
                                     </svg>
                                 </button>
-                            @else
+                            </div>
+                        @else
+                            <div class="h-20 w-20 overflow-hidden rounded-full bg-gray-100">
                                 <svg class="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
                                     <path
                                         d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
                                 </svg>
-                            @endif
-                        </span>
+                            </div>
+                        @endif
                         @if (empty($userE['photo']))
                             <div class="flex-1 items-center">
                                 <label

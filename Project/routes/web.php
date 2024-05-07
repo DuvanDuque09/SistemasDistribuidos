@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Livewire\Dashboard\Admin;
 use App\Livewire\Dashboard\Agente;
+use App\Livewire\Documents\IndexDocument;
 use App\Livewire\Managements\IndexManagement;
 use App\Livewire\Users\IndexUser;
 use Illuminate\Support\Facades\Artisan;
@@ -32,6 +33,7 @@ Route::middleware([
     Route::get('dashboard/agente', Agente::class)->name('dashboard.agente');
     Route::get('users', IndexUser::class)->name('users.index');
     Route::get('search', IndexManagement::class)->name('management.index');
+    Route::get('documents', IndexDocument::class)->name('documents.index');
 });
 
 

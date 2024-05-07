@@ -39,7 +39,15 @@
             Cargando.....
         </div>
 
-        <div class="flex h-screen bg-gray-50">
+        <div class="flex h-screen bg-gray-50 relative">
+            <svg class="absolute z-1 h-[50%] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-10"
+                viewBox="0 0 403.7 447.3" fill="#EC121F">
+                <path class="st0"
+                    d="M328.4,83.4H201.8C130.4,83.3,70.3,137,62.4,208.1l0,0C25,140.2,49.7,54.9,117.6,17.4    C138.2,6.1,161.4,0.1,185,0h218.7L328.4,83.4z" />
+                <path class="st0"
+                    d="M75.2,363.9h126.6c71.4,0,131.4-53.7,139.4-124.6l0,0c37.6,67.6,13.2,152.8-54.4,190.4    c-20.9,11.6-44.5,17.7-68.4,17.6H0L75.2,363.9z" />
+                <circle class="st0" cx="201.8" cy="223.6" r="112.7" />
+            </svg>
             <!-- Sidebar -->
             @livewire('menu.navigation')
 
@@ -58,10 +66,10 @@
         })
 
         Livewire.on('success', function(message) {
-            Swal.fire(
-                message,
-                'success'
-            )
+            Swal.fire({
+                title: message,
+                icon: "success"
+            });
         })
 
         Livewire.on('info', function(message) {
@@ -107,6 +115,22 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     Livewire.dispatch('activateConfirmed')
+                }
+            })
+        });
+
+        window.addEventListener('customer-create-confirmation', event => {
+            Swal.fire({
+                title: 'Cliente no encontrado.',
+                text: event.detail.text,
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#CA3A32',
+                cancelButtonColor: '#A9ABAE',
+                confirmButtonText: 'Si'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.dispatch('redirectCreateCustomer')
                 }
             })
         });

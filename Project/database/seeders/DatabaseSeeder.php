@@ -26,6 +26,10 @@ class DatabaseSeeder extends Seeder
             IdentificationTypeSeeder::class,
             CountrySeeder::class,
             TypesPersonsSeeder::class,
+            TypesProducts::class,
+            Products::class,
+            TypesManagements::class,
+            Groups::class,
         ]);
     }
 }

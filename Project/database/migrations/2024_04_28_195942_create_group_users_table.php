@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('types_people', function (Blueprint $table) {
+        Schema::create('group_users', function (Blueprint $table) {
             $table->id();
-            $table->string('type_person');
+            $table->unsignedBigInteger('group_id');
+            $table->unsignedBigInteger('user_id');
             $table->enum('state', ['Activo', 'Inactivo']);
+            $table->foreign('group_id')->references('id')->on('groups');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('types_people');
+        Schema::dropIfExists('group_users');
     }
 };
