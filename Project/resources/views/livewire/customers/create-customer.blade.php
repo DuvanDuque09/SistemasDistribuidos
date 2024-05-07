@@ -74,7 +74,7 @@
                         <x-input-error for="customer.address" />
                     </div>
                     <div class="col-span-1">
-                        <dt class="text-sm font-medium text-gray-500">Pais</dt>
+                        <dt class="text-sm font-medium text-gray-500">País</dt>
                         <select wire:model="customer.country_id"
                             class="mt-1 w-full bg-gray-50 rounded-md border-none focus:border-red-500 focus:ring-red-500 shadow-sm">
                             <option value="">Seleccione</option>
