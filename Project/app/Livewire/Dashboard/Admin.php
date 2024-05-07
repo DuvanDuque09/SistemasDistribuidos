@@ -16,7 +16,7 @@ class Admin extends Component
         // Ejemplo de consulta para obtener datos de una tabla llamada "ejemplo"
         $datos = DB::table('managements')->get();
         return $datos;
-    {
+    }
 
 
     public $user;
