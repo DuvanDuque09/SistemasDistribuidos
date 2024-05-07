@@ -18,7 +18,8 @@
         <div class="grid grid-cols-2 md:absolute top-4 md:w-[97%] md:h-[20%] gap-4">
             <div class="bg-white w-full h-full py-6 px-4 rounded-lg shadow">
                 <h2 class="text-1x2 font-extrabold p-2 text-gray-900">Llamadas recibidas</h2>
-                <label for="" value="" class="opacity-50 p-2 text-2">{{ \Carbon\Carbon::parse($fechaActual)->setTimezone('America/Bogota')->format('l, j \d\e F \d\e Y') }}</label>
+                <label for="" value=""
+                    class="opacity-50 p-2 text-2">{{ \Carbon\Carbon::parse($fechaActual)->setTimezone('America/Bogota')->format('l, j \d\e F \d\e Y') }}</label>
                 <div class="grid grid-cols-1 gap-1 p-2 bg-blue-100 w-[24%] z-10 rounded-3"
                     style="margin-top:5%; margin-left:34%;">
                     <p style="font-size: 4vh;top:5%; text-align:center;"><b>{{ count($datosDelDiaActual) }}</b></p>
@@ -28,21 +29,26 @@
             <div class="bg-white w-full h-full py-6 px-2 rounded-lg shadow">
                 <div class="mt-4">
                     <div class="flex items-center mb-4">
-                        <p class="flex-1 opacity-50 p-2 mr-4 text-2">%_CONTESTADAS</p>
-                        <p class="flex-1 opacity-50 p-2 mr-4 text-2">%_PERDIDAS</p>
+                        <p class="flex-1 opacity-50 p-2 mr-4 text-2">%_EFICIENCIA</p>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-1 p-2 rounded-3 w-full">
-                        <!-- Barra de progreso para % CONTESTADAS -->
-                        <div class="relative h-4 w-full rounded-full overflow-hidden bg-green-200 flex items-center">
-                            <div class="absolute top-0 left-0 bg-green-500" style="width: 30%; height: 100%;"></div>
-                            <div class="text-center w-full">30%</div>
-                        </div>
-                        <!-- Barra de progreso para % PERDIDAS -->
-                        <div class="relative h-4 w-full rounded-full overflow-hidden bg-yellow-200 flex items-center">
-                            <div class="absolute top-0 right-0 bg-yellow-500" style="width: 30%; height: 100%;"></div>
-                            <div class="text-center w-full">30%</div>
-                        </div>
+                    <div class="relative h-4 w-full rounded-full overflow-hidden bg-green-200 flex items-center">
+                        <?php
+                        $totalDuracion = 0;
+                        foreach ($datosDelDiaActual as $dato) {
+                            // Calcular la duración de cada llamada en minutos
+                            $duracionLlamada = Carbon\Carbon::parse($dato->end_date)->diffInMinutes(Carbon\Carbon::parse($dato->start_date));
+                            // Sumar la duración de todas las llamadas
+                            $totalDuracion += $duracionLlamada;
+                        }
+                        
+                        if ($totalDuracion <= 5) {
+                            $nivelEficiencia = 100;
+                        } else {
+                            $nivelEficiencia = (5 / $totalDuracion) * 100;
+                        }
+                        ?>
+                        <div class="text-center w-full bg-green-500" style="width: {{ $nivelEficiencia }}%; height: auto%;">{{ round($nivelEficiencia, 2) }}%</div>
                     </div>
                 </div>
             </div>
@@ -57,21 +63,23 @@
             <hr class="w-full border-b-2 border-gray-200">
             <br>
             <div class="ml-4 mr-4">
-                @foreach ($datosDelDiaActual as $dato)
+                @foreach ($datosDelDiaActual->take(10) as $dato)
                     <div class="flex items-center mb-4">
                         <img src="https://c0.klipartz.com/pngpicture/759/922/gratis-png-logo-del-telefono-iphone-telefono-smartphone-telefono-thumbnail.png"
                             class="h-10/12 w-10 rounded-2xl">
                         <div class="ml-2">
                             <p><b>Llamada recibida</b></p>
                             <label for="" value=""
-                                class="opacity-60">{{ Carbon\Carbon::parse($dato->start_date)->setTimezone('America/Bogota')->format('H:i') }} .
-                                {{ $dato->phone }}</label>
+                                class="opacity-60">{{ Carbon\Carbon::parse($dato->start_date)->setTimezone('America/Bogota')->format('H:i') }}
+                                . {{ $dato->phone }}
+                            </label>
                         </div>
                         <label for="" value=""
                             class="ml-auto"><b>{{ round(Carbon\Carbon::parse($dato->start_date)->diffInMinutes(Carbon\Carbon::parse($dato->end_date)), 1) }}
                                 min</b></label>
                     </div>
                 @endforeach
+
             </div>
         </div>
     </div>
@@ -107,6 +115,7 @@
         var daysOfWeek = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
         var ctx1 = document.getElementById('myChart').getContext('2d');
         var llamadasPorDia = {!! json_encode($llamadasPorDiaArray) !!};
+        //console.log(llamadasPorDia);
         var data = Object.values(llamadasPorDia); // No es necesario cortar los datos
         var backgroundColors = Array(data.length).fill('rgba(178, 172, 172)'); // Colores predeterminados
         // Cambiar el color del día actual a azul
@@ -115,10 +124,12 @@
         var myChart1 = new Chart(ctx1, {
             type: 'bar',
             data: {
-                labels: daysOfWeek, // No es necesario cortar los días de la semana
+                labels: daysOfWeek,
                 datasets: [{
                     label: '# de Llamadas por Semana',
-                    data: data,
+                    data: data.map(function(value) {
+                        return parseInt(value); // Convertir a enteros
+                    }),
                     backgroundColor: backgroundColors,
                     borderColor: backgroundColors,
                     borderWidth: 1
@@ -131,17 +142,20 @@
                         align: 'top',
                         formatter: function(value, context) {
                             return value;
-                        }
+                        },
+                        precision: 0 // Mostrar solo valores enteros en las etiquetas
                     }
                 },
                 scales: {
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        stepSize: 1 // Establecer el tamaño del paso a 1 para asegurar valores enteros
                     }
                 }
             }
         });
     });
+
 
     // Datos proporcionados desde el controlador PHP
     var dataLlamadas = {!! json_encode($horaPico) !!};
@@ -164,9 +178,10 @@
         },
         options: {
             scales: {
-                xAxes: [{
+                yAxes: [{
                     ticks: {
-                        beginAtZero: true // Empezar el eje Y desde cero
+                        beginAtZero: true, // Empezar el eje Y desde cero
+                        stepSize: 1 // Mostrar solo valores enteros en el eje Y
                     }
                 }]
             }
