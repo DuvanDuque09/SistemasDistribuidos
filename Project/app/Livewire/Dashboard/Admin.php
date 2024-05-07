@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Dashboard;
 
+use App\Models\Managements;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -24,31 +25,13 @@ class Admin extends Component
 
     public function render()
     {
-        $user = Managements::select('users.*', 'p.*')
-            ->join('persons AS p', 'users.person_id', 'p.id')
-            ->where('users.id', $id)
-            ->first();
+        $fechaActual = Carbon::now('America/Bogota')->toDateString();
+        $datosDelDiaActual = Managements::where('user_id', Auth::user()->id) 
+            ->where('state', 'Activo')
+            ->get();
 
-        // Establecer la localización en español
-        Carbon::setLocale('es');
-
-        // Obtener la fecha actual y almacenarla en la variable $fechaActual
-        $this->fechaActual = Carbon::now();
-
-        $datosTabla = $this->obtenerDatosTabla();
-
-        //************* INICIO Bloque para Obtener las llamadas del dia actual ************************************************************** */
-        // Obtener la fecha actual
-        $fechaActual = Carbon::now()->format('Y-m-d');
-
-        // Filtrar los datos relacionados con el día actual
-        $datosDelDiaActual = $datosTabla->filter(function ($dato) use ($fechaActual) {
-            return Carbon::parse($dato->start_date)->setTimezone('America/Bogota')->format('Y-m-d') === $fechaActual;
-        });
-        //************* FIN Bloque para Obtener las llamadas del dia actual ************************************************************** */
 
         //************* INICIO Bloque para Obtener la cantidad de llamadas de toda la semana ********************************************* */
-        // Obtener la fecha actual y la fecha del primer día de la semana (lunes)
         $hoy = Carbon::now();
         $inicioSemana = $hoy->startOfWeek();
 
@@ -61,7 +44,7 @@ class Admin extends Component
             $fechaDia = $inicioSemana->copy()->addDays($i);
 
             // Filtrar los datos de llamadas para el día actual
-            $llamadasDia = $datosTabla->filter(function ($dato) use ($fechaDia) {
+            $llamadasDia = $datosDelDiaActual->filter(function ($dato) use ($fechaDia) {
                 return Carbon::parse($dato->start_date)->toDateString() === $fechaDia->toDateString();
             });
 
@@ -73,35 +56,35 @@ class Admin extends Component
         }
 
         $llamadasPorDiaArray = [
-            'Monday' => $llamadasPorDia['Monday'],
-            'Tuesday' => $llamadasPorDia['Tuesday'],
-            'Wednesday' => $llamadasPorDia['Wednesday'],
-            'Thursday' => $llamadasPorDia['Thursday'],
-            'Friday' => $llamadasPorDia['Friday'],
-            'Saturday' => $llamadasPorDia['Saturday'],
-            'Sunday' => $llamadasPorDia['Sunday']
+            'Monday' => $llamadasPorDia['Monday'] ?? 0,
+            'Tuesday' => $llamadasPorDia['Tuesday'] ?? 0,
+            'Wednesday' => $llamadasPorDia['Wednesday'] ?? 0,
+            'Thursday' => $llamadasPorDia['Thursday'] ?? 0,
+            'Friday' => $llamadasPorDia['Friday'] ?? 0,
+            'Saturday' => $llamadasPorDia['Saturday'] ?? 0,
+            'Sunday' => $llamadasPorDia['Sunday'] ?? 0
         ];
+
+
         //************* FIN Bloque para Obtener la cantidad de llamadas de toda la semana ********************************************* */
 
         //************* INICIO Bloque para Obtener el pico de llamadas por horas del día ******************************************* */
-        // Crear un array para almacenar el número de llamadas por hora
-        $llamadasPorHora = [];
+        $fechaActual = Carbon::now('America/Bogota');
+        $fecha = $fechaActual->format('Y-m-d');
 
-        // Crear un array para almacenar el total de llamadas por hora
+        // Inicializar los arrays para almacenar el número de llamadas y el total de llamadas por hora
+        $llamadasPorHora = [];
         $totalLlamadasPorHora = [];
 
-        // Obtener la fecha actual en formato de día (sin la hora)
-        $fechaActual = date('Y-m-d');
-
-        // Iterar sobre los datos y contar el número de llamadas por hora
-        foreach ($datosTabla as $dato) {
+        // Iterar sobre los datos del día actual
+        foreach ($datosDelDiaActual as $dato) {
             // Obtener la fecha y hora del registro
             $fechaHoraInicio = $dato->start_date;
 
             // Verificar si la fecha del registro es la fecha actual
-            if (substr($fechaHoraInicio, 0, 10) === $fechaActual) {
+            if (substr($fechaHoraInicio, 0, 10) === $fecha) {
                 // Obtener la hora del registro (formato de 24 horas)
-                $hora = date('H', strtotime($fechaHoraInicio));
+                $hora = date('H:i', strtotime($fechaHoraInicio));
 
                 // Incrementar el contador de llamadas para esta hora
                 if (isset($llamadasPorHora[$hora])) {
@@ -119,17 +102,16 @@ class Admin extends Component
             }
         }
 
+        // Almacenar los resultados en un array asociativo
         $horaPico = [
             'Hora' => $llamadasPorHora,
             'TotalHora' => $totalLlamadasPorHora
         ];
-
         //************* FIN Bloque para Obtener el pico de llamadas por horas del día ********************************************* */
 
-        // dd($totalLlamadasPorHora);
+        //dd($llamadasPorDiaArray); //dd($totalLlamadasPorHora);
 
         return view('livewire.dashboard.admin', [
-            'datosTabla' => $datosTabla,
             'datosDelDiaActual' => $datosDelDiaActual,
             'llamadasPorDiaArray' => $llamadasPorDiaArray,
             'horaPico' => $horaPico,
