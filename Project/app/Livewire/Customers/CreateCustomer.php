@@ -167,10 +167,10 @@ class CreateCustomer extends Component
 
     public function render()
     {
-        $identificationTypes = IdentificationType::all();
-        $countries = Country::all();
-        $typesPersons = TypesPersons::all();
-        $typesProducts = TypesProducts::all();
+        $identificationTypes = IdentificationType::where('state', 'Activo')->get();
+        $countries = Country::where('state', 'Activo')->get();
+        $typesPersons = TypesPersons::where('state', 'Activo')->get();
+        $typesProducts = TypesProducts::where('state', 'Activo')->get();
 
         return view('livewire.customers.create-customer', compact('identificationTypes', 'countries', 'typesPersons', 'typesProducts'))
             ->layout('layouts.app');

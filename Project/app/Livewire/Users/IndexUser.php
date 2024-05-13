@@ -323,8 +323,8 @@ class IndexUser extends Component
             // ->paginate(1);
             ->get();
 
-        $identificationTypes = IdentificationType::all();
-        $countries = Country::all();
+        $identificationTypes = IdentificationType::where('state', 'Activo')->get();
+        $countries = Country::where('state', 'Activo')->get();
 
         return view('livewire.users.index-user', compact('users', 'identificationTypes', 'countries'))
             ->layout('layouts.app');

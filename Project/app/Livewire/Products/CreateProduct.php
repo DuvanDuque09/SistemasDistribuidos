@@ -137,7 +137,7 @@ class CreateProduct extends Component
 
     public function render()
     {
-        $typesProducts = TypesProducts::all();
+        $typesProducts = TypesProducts::where('state', 'Activo')->get();
 
         return view('livewire.products.create-product', compact('typesProducts'))
             ->layout('layouts.app');
