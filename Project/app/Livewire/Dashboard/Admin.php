@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class Admin extends Component
-{
+{   
 
     public function obtenerDatosTabla()
     {
@@ -18,7 +18,6 @@ class Admin extends Component
         $datos = DB::table('managements')->get();
         return $datos;
     }
-
 
     public $user;
     public $fechaActual;
