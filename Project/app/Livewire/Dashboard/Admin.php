@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class Admin extends Component
-{
+{   
 
     public function obtenerDatosTabla()
     {
@@ -19,15 +19,15 @@ class Admin extends Component
         return $datos;
     }
 
-
     public $user;
     public $fechaActual;
 
     public function render()
     {
         $fechaActual = Carbon::now('America/Bogota')->toDateString();
-        $datosDelDiaActual = Managements::where('user_id', Auth::user()->id) 
+        $datosDelDiaActual = Managements::where('user_id', Auth::user()->id) //Pintamos los registros de llamadas que estan registradas en el dia actual
             ->where('state', 'Activo')
+            ->whereDate('start_date', $fechaActual)
             ->get();
 
 
@@ -83,8 +83,7 @@ class Admin extends Component
 
             // Verificar si la fecha del registro es la fecha actual
             if (substr($fechaHoraInicio, 0, 10) === $fecha) {
-                // Obtener la hora del registro (formato de 24 horas)
-                $hora = date('H:i', strtotime($fechaHoraInicio));
+                $hora = date('h:i A', strtotime($fechaHoraInicio));
 
                 // Incrementar el contador de llamadas para esta hora
                 if (isset($llamadasPorHora[$hora])) {
@@ -109,7 +108,7 @@ class Admin extends Component
         ];
         //************* FIN Bloque para Obtener el pico de llamadas por horas del día ********************************************* */
 
-        //dd($llamadasPorDiaArray); //dd($totalLlamadasPorHora);
+        //dd($horaPico); //dd($totalLlamadasPorHora);
 
         return view('livewire.dashboard.admin', [
             'datosDelDiaActual' => $datosDelDiaActual,

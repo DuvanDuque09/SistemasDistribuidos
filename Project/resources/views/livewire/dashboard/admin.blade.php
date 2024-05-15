@@ -48,7 +48,9 @@
                             $nivelEficiencia = (5 / $totalDuracion) * 100;
                         }
                         ?>
-                        <div class="text-center w-full bg-green-500" style="width: {{ $nivelEficiencia }}%; height: auto%;">{{ round($nivelEficiencia, 2) }}%</div>
+                        <div class="text-center w-full bg-green-500"
+                            style="width: {{ $nivelEficiencia }}%; height: auto%;">{{ round($nivelEficiencia, 2) }}%
+                        </div>
                     </div>
                 </div>
             </div>
@@ -109,17 +111,18 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var today = new Date().getDay(); // Obtener el día actual (0 para Domingo, 1 para Lunes, etc.)
-        // Ajustar el día actual para que corresponda al índice correcto en el array
+        var today = new Date().getDay();
         today = (today === 0) ? 6 : today - 1;
         var daysOfWeek = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+
         var ctx1 = document.getElementById('myChart').getContext('2d');
         var llamadasPorDia = {!! json_encode($llamadasPorDiaArray) !!};
-        //console.log(llamadasPorDia);
-        var data = Object.values(llamadasPorDia); // No es necesario cortar los datos
-        var backgroundColors = Array(data.length).fill('rgba(178, 172, 172)'); // Colores predeterminados
-        // Cambiar el color del día actual a azul
+        var data = Object.values(llamadasPorDia);
+        var backgroundColors = Array(data.length).fill('rgba(178, 172, 172)');
         backgroundColors[today] = 'rgba(54, 162, 235)';
+
+        var maxYValue = Math.max(...data);
+        var maxYTicks = maxYValue;
 
         var myChart1 = new Chart(ctx1, {
             type: 'bar',
@@ -127,9 +130,7 @@
                 labels: daysOfWeek,
                 datasets: [{
                     label: '# de Llamadas por Semana',
-                    data: data.map(function(value) {
-                        return parseInt(value); // Convertir a enteros
-                    }),
+                    data: data,
                     backgroundColor: backgroundColors,
                     borderColor: backgroundColors,
                     borderWidth: 1
@@ -143,13 +144,20 @@
                         formatter: function(value, context) {
                             return value;
                         },
-                        precision: 0 // Mostrar solo valores enteros en las etiquetas
+                        precision: 0
                     }
                 },
                 scales: {
                     y: {
                         beginAtZero: true,
-                        stepSize: 1 // Establecer el tamaño del paso a 1 para asegurar valores enteros
+                        stepSize: 1,
+                        ticks: {
+                            stepSize: 1, // Establecer el tamaño del paso a 1 para asegurar valores enteros
+                            callback: function(value) {
+                                return (value === 0) ? '0' : parseInt(value)
+                                    .toString(); // Convertir a entero y formatear como string
+                            }
+                        }
                     }
                 }
             }
@@ -162,28 +170,41 @@
     var horas = Object.keys(dataLlamadas['Hora']);
     var totales = Object.values(dataLlamadas['TotalHora']);
 
+    // Modificar los valores en el eje Y para que sean enteros
+    var maxYValue = Math.max(...totales);
+    var maxYTicks = maxYValue;
+
     // Configurar la gráfica
     var ctx = document.getElementById('picoLlamada').getContext('2d');
     var myChart = new Chart(ctx, {
-        type: 'bar', // Tipo de gráfica: barras horizontales
+        type: 'line', // Tipo de gráfica: línea
         data: {
             labels: horas, // Horas en el eje X
             datasets: [{
                 label: 'Total de Llamadas', // Etiqueta de la serie
                 data: totales, // Totales en el eje Y
-                backgroundColor: 'rgba(54, 162, 235, 0.8)', // Color de las barras
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
+                backgroundColor: 'rgba(54, 162, 235, 0.8)', // Color del relleno
+                borderColor: 'rgba(54, 162, 235, 1)', // Color de la línea
+                borderWidth: 1,
+                pointBackgroundColor: 'rgba(255, 99, 132, 1)' // Color de los puntos
             }]
         },
         options: {
             scales: {
-                yAxes: [{
+                y: {
+                    beginAtZero: true,
+                    stepSize: 1,
                     ticks: {
-                        beginAtZero: true, // Empezar el eje Y desde cero
-                        stepSize: 1 // Mostrar solo valores enteros en el eje Y
+                        callback: function(value) {
+                            // Mostrar el valor solo si es un entero y mayor o igual a 1
+                            if (Number.isInteger(value) && value >= 1) {
+                                return value.toString();
+                            } else {
+                                return '';
+                            }
+                        }
                     }
-                }]
+                }
             }
         }
     });
