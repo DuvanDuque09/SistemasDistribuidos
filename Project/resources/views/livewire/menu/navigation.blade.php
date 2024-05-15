@@ -116,7 +116,7 @@
                 </a>
             @endcan
             @can('dashboard.agente')
-                <button
+                <a href="{{ route('dashboard.agente') }}"
                     class="group relative p-2 transition-colors rounded-lg shadow-md hover:bg-red-800 hover:text-white focus:outline-none focus:ring focus:ring-red-600 focus:ring-offset-white focus:ring-offset-2 {{ Request::routeIs('dashboard.agente') ? 'bg-red-600 text-white' : 'text-red-600 hover:text-white hover:bg-red-600' }}">
                     <svg viewBox="0 0 15 15" class="w-6 h-6" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd"
@@ -132,7 +132,7 @@
                             <span>Home</span>
                         </div>
                     </div>
-                </button>
+                </a>
             @endcan
             <!-- Users button -->
             @can('users')

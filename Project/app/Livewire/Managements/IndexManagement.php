@@ -15,11 +15,13 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class IndexManagement extends Component
 {
-    public $identification;
-    // public $identification = 1004148273;
+    use WithPagination;
+    // public $identification;
+    public $identification = 1004148273;
     public $customer = [];
     public $management = [];
     public $cuentasInversion = [];
@@ -295,7 +297,8 @@ class IndexManagement extends Component
                     return $query->where('cp.customer_id', $this->customer['customer_id']);
                 }
             })
-            ->get();
+            // ->get();
+            ->paginate(15);
 
         // dd($managements);
 
