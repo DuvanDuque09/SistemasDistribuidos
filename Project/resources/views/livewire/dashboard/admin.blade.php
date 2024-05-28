@@ -72,7 +72,7 @@
                         <div class="ml-2">
                             <p><b>Llamada recibida</b></p>
                             <label for="" value=""
-                                class="opacity-60">{{ Carbon\Carbon::parse($dato->start_date)->setTimezone('America/Bogota')->format('H:i') }}
+                                class="opacity-60">{{ Carbon\Carbon::parse($dato->a)->setTimezone('America/Bogota')->format('H:i') }}
                                 . {{ $dato->phone }}
                             </label>
                         </div>
