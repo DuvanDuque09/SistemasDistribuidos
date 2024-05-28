@@ -1,8 +1,10 @@
 # ScotiaApp
 
-Este proyecto va estar desarrollado con el framework [Laravel](https://laravel.com/) version 11.
+Este proyecto fue desarrollado con el framework [Laravel](https://laravel.com/) version 11.
 
-Este proyecto tiene como fin llevar el control de las gestion de clientes, que se comunican al servicio de atencion al cliente de Scotia Bank.
+El objetivo principal de este proyecto es mejorar significativamente la eficiencia y efectividad del equipo de servicio al cliente mediante el acceso rápido y fácil a la información necesaria para resolver las consultas de los clientes. Esto se traduce en una mejor experiencia del cliente, mayor satisfacción y lealtad, así como en una mejora en la productividad del equipo de servicio al cliente.
+
+![Scotia](/Documents/Scotia.png)
 
 ## Tabla de Contenido
 
@@ -17,13 +19,23 @@ Este proyecto tiene como fin llevar el control de las gestion de clientes, que s
 
 ## Introducción
 
+El aplicativo es una plataforma centralizada que permite a los agentes de servicio al cliente acceder a información relevante y oportuna de manera inmediata. La solución tecnológica integra diversas fuentes de datos, herramientas de búsqueda avanzada y un sistema de actualización en tiempo real para garantizar que la información esté siempre actualizada y disponible.
+
 ## Base de Datos
+
+La base de datos es el corazón del aplicativo. Nuestra solución utiliza _MySQL_, uno de los sistemas de gestión de bases de datos relacionales más populares y robustos del mercado, conocido por su rendimiento, escalabilidad y facilidad de uso.
+
+Utilizamos las funcionalidades de seguridad avanzadas de Laravel, como Hash y Encryption, para proteger los datos sensibles. Laravel Hash proporciona una forma segura de almacenar contraseñas, mientras que Laravel Encryption asegura que los datos confidenciales estén cifrados y solo accesibles para usuarios autorizados.
 
 ### Diagrama MR
 
 ![Modelo relacional de la base de datos](/Documents/MR.png)
 
 ## Arquitectura
+
+El desarrollo de nuestro aplicativo se basa en la arquitectura del framework Laravel.
+
+Laravel sigue el patrón de diseño MVC, que separa la lógica de la aplicación en tres componentes principales: Modelo, Vista y Controlador. Esto permite una mejor organización del código, facilita el mantenimiento y mejora la escalabilidad del aplicativo.
 
 ## Correr aplicación
 
@@ -47,8 +59,22 @@ Tecnologias usadas en el proyecto.
 
 - [Laravel 11](https://laravel.com/) - Framework fácil de aprender
 - [Livewire 3.3.4](https://livewire.laravel.com/) - Interfaz de usuario potente y dinámica sin salir de PHP.
+- [Tailwind CSS 3.0.2](https://tailwindcss.com/) - Crea rápidamente sitios web.
 
 ## Despliegue 📦
+
+Para el despliegue hemos planificado un despliegue robusto y seguro utilizando un servicio de hosting confiable que garantiza alta disponibilidad y rendimiento.
+
+### Configuración del Entorno
+
+- Se configura un entorno de servidor optimizado para Laravel, incluyendo la instalación de PHP, MySQL, y todas las extensiones y dependencias necesarias.
+- Usamos el servidor web Apache, configurado para manejar solicitudes HTTP de manera eficiente y segura.
+
+### Base de Datos y Migraciones
+
+- La base de datos MySQL se configura en el servidor de hosting, asegurando que esté optimizada para el rendimiento y la seguridad.
+
+- Se ejecutan migraciones de Laravel para crear y actualizar la estructura de la base de datos de acuerdo con las necesidades de la aplicación. Los seeders también se utilizan para poblar la base de datos con datos iniciales necesarios para el funcionamiento del sistema.
 
 ## Repositorio
 
