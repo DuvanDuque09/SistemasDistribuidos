@@ -221,7 +221,7 @@
                 <div class="flex flex-col h-full mt-6 gap-4" x-show="tab === 'Productos'">
                     <div class="flex justify-between items-center">
                         <h6 class="pl-2 text-gray-700 text-2xl font-extrabold">Productos</h6>
-                        @livewire('products.create-product', ['customer_id' => $customer['id']])
+                        @livewire('products.create-product', ['customer_id' => $customer['customer_id']])
                     </div>
                     <div class="flex flex-col pb-12 gap-4">
                         {{--  Cuentas e Inversión  --}}

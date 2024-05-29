@@ -48,6 +48,7 @@ class CreateProduct extends Component
             $this->reset('open', 'type_product', 'product');
             // $this->render();
             $this->dispatch('success', 'Producto agregado');
+            $this->dispatch('createProduct');
         } catch (\Illuminate\Database\QueryException $e) { // Manejo de errores de base de datos
             DB::rollBack();
             $this->dispatch('error', 'No se pudo agregar el producto. ' . $e->getMessage());

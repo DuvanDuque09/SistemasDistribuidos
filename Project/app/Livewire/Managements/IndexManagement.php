@@ -20,8 +20,8 @@ use Livewire\WithPagination;
 class IndexManagement extends Component
 {
     use WithPagination;
-    // public $identification;
-    public $identification = 1004148273;
+    public $identification;
+    // public $identification = 1004148273;
     public $customer = [];
     public $management = [];
     public $cuentasInversion = [];
@@ -31,6 +31,9 @@ class IndexManagement extends Component
 
     public function searchCustomer()
     {
+        $this->cuentasInversion = [];
+        $this->tarjetasCredito = [];
+
         $this->validate(
             [
                 'identification' => 'required'
@@ -139,6 +142,13 @@ class IndexManagement extends Component
 
             // dd($this->cuentasInversion,  $this->tarjetasCredito);
         }
+    }
+
+
+    #[On('createProduct')]
+    public function createProduct()
+    {
+        $this->searchCustomer();
     }
 
     /**
